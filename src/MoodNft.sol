@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
-pragma solidity 0.8.20;
+pragma solidity ^0.8.20;
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
@@ -30,8 +30,13 @@ contract MoodNft is ERC721 {
         s_tokenConter++;
     }
 
+    function _isApprovedOrOwner(address spender, uint256 tokenId) internal view virtual returns (bool){
+        address owner = ERC721.ownerOf(tokenId);
+        return (spender == owner || isApprovedForAll(owner, spender) || getApproved(tokenId) == spender);
+    }
+
     function flipMood(uint256 tokenId) public {
-        if (msg.sender != ownerOf(tokenId)) {
+         if (!_isApprovedOrOwner(msg.sender, tokenId)) {
             revert MoodNft__CantFlipMoodIfNotOwner();
         }
 
@@ -59,14 +64,27 @@ contract MoodNft is ERC721 {
                 _baseURI(),
                 Base64.encode(
                     abi.encodePacked(
-                        '{"name": "',
-                        name(),
-                        '", "description": "A NFT that reflects the owners mood", "attributes": [{"trait_type": "moodiness", "value": 100}], "image": "',
-                        imageURI,
-                        '"}'
+                        '{"name":"',
+                            name(), // You can add whatever name here
+                            '", "description":"An NFT that reflects the mood of the owner, 100% on Chain!", ',
+                            '"attributes": [{"trait_type": "moodiness", "value": 100}], "image":"',
+                            imageURI,
+                            '"}'
                     )
                 )
             )
         );
+    }
+
+    function svgUriFromToken(uint256 tokenId) public view returns (string memory){
+        string memory imageURI;
+
+        if(s_tokenIdoToMood[tokenId] == NFTState.HAPPY){
+            imageURI = s_happySvgImageURI;
+        } else {
+            imageURI = s_sadSvgImageURI;
+        }
+
+        return imageURI;
     }
 }

@@ -1,4 +1,74 @@
-Happy svg:
+# NFT's
+- IPFS hosted
+  - Users can choose their img of the nft.
+- svg on-chain
+  - Users can flip the mood of the nft
+
+## Quickstart
+
+```
+git clone https://github.com/056xyz/ERC721.git
+cd ERC721
+forge install
+forge build
+```
+
+# Usage
+
+## Start a local node
+
+```
+make anvil
+```
+
+## Deploy
+
+This will default to your local node. You need to have it running in another terminal in order for it to deploy.
+
+```
+make deploy
+```
+
+## Testing
+
+```
+forge test
+```
+
+or 
+
+```
+forge test --fork-url $SEPOLIA_RPC_URL
+```
+
+# Deployment to a testnet or mainnet
+
+1. Setup environment variables
+
+You'll want to set your `SEPOLIA_RPC_URL` and `PRIVATE_KEY` as environment variables. You can add them to a `.env` file, similar to what you see in `.env.example`.
+
+- `PRIVATE_KEY`: 
+- `SEPOLIA_RPC_URL`:
+
+Optionally, add your `ETHERSCAN_API_KEY` if you want to verify your contract on Etherscan.
+
+2. Deploy (IPFS NFT)
+
+```
+make deploy ARGS="--network sepolia"
+```
+
+3. Deploy (SVG NFT)
+
+```
+make deploySvg ARGS="--network sepolia"
+```
+
+## Scripts
+
+After deploy to a testnet or local net, you can run the scripts. 
+
+<!-- Happy svg:
 data:image/svg+xml;base64,
 PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgd2lkdGg9IjQwMCIgIGhlaWdodD0iNDAwIiB4bWxu
 cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjEw
@@ -35,4 +105,4 @@ data:image/svg+xml;base64,
 PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRw
 Oi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCI+PHRleHQg
 eD0iMCIgeT0iMTUiIGZpbGw9ImJsYWNrIj5IaSEgWW91ciBicm93c2VyIGRlY29kZWQgdGhpczwv
-dGV4dD48L3N2Zz4=
+dGV4dD48L3N2Zz4= -->
